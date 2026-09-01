@@ -1,0 +1,8 @@
+document.getElementById("year").textContent=new Date().getFullYear();
+const menuBtn=document.querySelector(".menu-btn"), mobile=document.querySelector(".mobile-menu");
+menuBtn.addEventListener("click",()=>{const open=mobile.classList.toggle("open");menuBtn.setAttribute("aria-expanded",open);menuBtn.textContent=open?"×":"☰"});
+document.querySelectorAll(".mobile-menu a").forEach(a=>a.addEventListener("click",()=>{mobile.classList.remove("open");menuBtn.setAttribute("aria-expanded","false");menuBtn.textContent="☰"}));
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");observer.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+const form=document.getElementById("quoteForm"), status=document.querySelector(".form-status");
+form.addEventListener("submit",e=>{e.preventDefault();const d=new FormData(form);const subject=encodeURIComponent("New QW Solutions project enquiry");const body=encodeURIComponent(`Name: ${d.get("name")}\nBusiness: ${d.get("business")||"-"}\nEmail: ${d.get("email")}\nPhone: ${d.get("phone")||"-"}\nService: ${d.get("service")}\n\nProject details:\n${d.get("message")}`);status.textContent="Opening your email app to send the enquiry…";window.location.href=`mailto:qwssolutions@gmail.com?subject=${subject}&body=${body}`;setTimeout(()=>status.textContent="If your email app did not open, email us directly at qwssolutions@gmail.com.",900)})
